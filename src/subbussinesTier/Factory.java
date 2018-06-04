@@ -95,11 +95,7 @@ public class Factory {
             return reservation;
         }
         
-       // public Reservation createReservation(String[] data){
-        //    Reservation reservation = new Reservation();
-        //    //in progress
-        //    return reservation;
-        //}
+       
         
         public Game createGame(GameTitle gameTitle){
             Game game = new Game();
@@ -111,6 +107,7 @@ public class Factory {
         Game game = null;
                 game = new Game();
                 game.setNumber(Integer.parseInt(data[0]));
+                
         return game;
     }
 
