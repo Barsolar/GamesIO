@@ -5,119 +5,62 @@
  */
 package subbussinesTier.entities;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.junit.runners.Parameterized;
+import testdata.TestData;
 
 /**
  *
- * @author Bartek
+ * @author Win8
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Category({TestEntity.class})
+@RunWith(Parameterized.class)
 public class GameTest {
-    
+
     public GameTest() {
     }
-    
+
+    static TestData data;
+    static Game game;
+
     @BeforeClass
     public static void setUpClass() {
+        data = new TestData();
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
+    @Parameterized.Parameter
+    public int number1;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        Object[][] data1 = new Object[][]{{0}, {1}};
+        return Arrays.asList(data1);
+    }
+
     @Before
     public void setUp() {
+        game = data.game[number1];
     }
-    
+
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of getNumber method, of class Game.
-     */
-    @Test
-    public void testGetNumber() {
-        System.out.println("getNumber");
-        Game instance = new Game();
-        int expResult = 0;
-        int result = instance.getNumber();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setNumber method, of class Game.
-     */
-    @Test
-    public void testSetNumber() {
-        System.out.println("setNumber");
-        int number = 0;
-        Game instance = new Game();
-        instance.setNumber(number);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getGameTitle method, of class Game.
-     */
-    @Test
-    public void testGetGameTitle() {
-        System.out.println("getGameTitle");
-        Game instance = new Game();
-        GameTitle expResult = null;
-        GameTitle result = instance.getGameTitle();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setGameTitle method, of class Game.
-     */
-    @Test
-    public void testSetGameTitle() {
-        System.out.println("setGameTitle");
-        GameTitle gameTitle = null;
-        Game instance = new Game();
-        instance.setGameTitle(gameTitle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getReservations method, of class Game.
-     */
-    @Test
-    public void testGetReservations() {
-        System.out.println("getReservations");
-        Game instance = new Game();
-        ArrayList<Reservation> expResult = null;
-        ArrayList<Reservation> result = instance.getReservations();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setReservations method, of class Game.
-     */
-    @Test
-    public void testSetReservations() {
-        System.out.println("setReservations");
-        ArrayList<Reservation> reservations = null;
-        Game instance = new Game();
-        instance.setReservations(reservations);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -126,11 +69,13 @@ public class GameTest {
     @Test
     public void testAddReservation() {
         System.out.println("addReservation");
-        Reservation reservation = null;
-        Game instance = new Game();
-        instance.addReservation(reservation);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int i = 0;
+        for (Reservation r : data.reservation) {
+            game.addReservation(r);
+            assertSame(r, game.getReservations().get(i));
+            i++;
+        }
+
     }
 
     /**
@@ -139,13 +84,13 @@ public class GameTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object o = null;
-        Game instance = new Game();
-        boolean expResult = false;
-        boolean result = instance.equals(o);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = number1; i < 2; i++) {
+            if (number1 == i) {
+                assertTrue(data.game[number1].equals(data.game[i]));
+            } else {
+                assertFalse(data.game[number1].equals(data.game[i]));
+            }
+        }
     }
 
     /**
@@ -154,13 +99,15 @@ public class GameTest {
     @Test
     public void testIsFree() {
         System.out.println("isFree");
-        LocalDate date = null;
-        Game instance = new Game();
-        boolean expResult = false;
-        boolean result = instance.isFree(date);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        
+        boolean result;
+        result = game.isFree(data.dates[0]);
+        assertFalse(result);
+        result = game.isFree(data.dates[1]);
+        assertFalse(result);
+        
+
     }
-    
+
 }

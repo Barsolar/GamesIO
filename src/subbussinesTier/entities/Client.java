@@ -17,6 +17,7 @@ public class Client {
         public Client(String name, String number){
             this.name = name;
             this.number = Integer.valueOf(number);
+            reservation = new ArrayList();
         }
 
 	public String getName() {
@@ -55,6 +56,7 @@ public class Client {
             Reservation r = factory.createReservation(game, date, this);
             game.addReservation(r);
             this.reservation.add(r);
+            
         }
         
         @Override

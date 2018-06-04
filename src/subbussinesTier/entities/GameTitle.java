@@ -12,161 +12,165 @@ import subbussinesTier.Factory;
 
 public class GameTitle {
 
-	private String studio, title, publisher;
-	private LocalDate releaseDate;
-	private int barCode;
-	private Genre genre;
-	private ArrayList<Game> games;
-	private Game game;
+    private String studio, title, publisher;
+    private LocalDate releaseDate;
+    private int barCode;
+    private Genre genre;
+    private ArrayList<Game> games;
+    private Game game;
 
-	public GameTitle() {
-	}
-        
-        public GameTitle(int barCode){
-            this.barCode=barCode;
+    public GameTitle() {
+    }
+
+    public GameTitle(int barCode) {
+        this.barCode = barCode;
+    }
+
+    public GameTitle(int barCode, String studio, String title, String publisher) {
+        this.barCode = barCode;
+        this.studio = studio;
+        this.title = title;
+        this.publisher = publisher;
+    }
+
+    public GameTitle(int barCode, String studio, String title, String publisher, String genre) {
+        this.barCode = barCode;
+        this.studio = studio;
+        this.title = title;
+        this.publisher = publisher;
+        Genre genre1 = null;
+        switch (genre) {
+            case "shooter":
+                genre1 = Genre.shooter;
+                break;
+            case "strategyr":
+                genre1 = Genre.strategy;
+                break;
+            case "rolePlay":
+                genre1 = Genre.rolePlay;
+                break;
+            case "simulation":
+                genre1 = Genre.simulation;
+                break;
+            case "battleArena":
+                genre1 = Genre.battleArena;
+                break;
+            case "storyBased":
+                genre1 = Genre.storyBased;
+                break;
+            case "cardGame":
+                genre1 = Genre.cardGame;
+                break;
+            case "indie":
+                genre1 = Genre.indie;
+                break;
+            case "platformer":
+                genre1 = Genre.platformer;
+                break;
         }
-        public GameTitle(int barCode, String studio,String title, String publisher){
-            this.barCode=barCode;
-            this.studio=studio;
-            this.title=title;
-            this.publisher=publisher;
-        }
-        public GameTitle(int barCode, String studio,String title, String publisher,String genre){
-            this.barCode=barCode;
-            this.studio=studio;
-            this.title=title;
-            this.publisher=publisher;
-            Genre genre1 = null;
-            switch (genre) {
-			case "shooter":
-				genre1 = Genre.shooter;
-				break;
-			case "strategyr":
-				genre1 = Genre.strategy;
-				break;
-			case "rolePlay":
-				genre1 = Genre.rolePlay;
-				break;
-			case "simulation":
-				genre1 = Genre.simulation;
-				break;
-			case "battleArena":
-				genre1 = Genre.battleArena;
-				break;
-			case "storyBased":
-				genre1 = Genre.storyBased;
-				break;
-			case "cardGame":
-				genre1 = Genre.cardGame;
-				break;
-			case "indie":
-				genre1 = Genre.indie;
-				break;
-			case "platformer":
-				genre1 = Genre.platformer;
-				break;
-			}
-            this.genre=genre1;
-        }
+        this.genre = genre1;
+    }
 
-	public String getStudio() {
-		return studio;
-	}
+    public String getStudio() {
+        return studio;
+    }
 
-	public void setStudio(String studio) {
-		this.studio = studio;
-	}
+    public void setStudio(String studio) {
+        this.studio = studio;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getPublisher() {
-		return publisher;
-	}
+    public String getPublisher() {
+        return publisher;
+    }
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-	public LocalDate getReleaseDate() {
-		return releaseDate;
-	}
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 
-	public void setReleaseDate(LocalDate releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-	public int getBarCode() {
-		return barCode;
-	}
+    public int getBarCode() {
+        return barCode;
+    }
 
-	public void setBarCode(int barCode) {
-		this.barCode = barCode;
-	}
+    public void setBarCode(int barCode) {
+        this.barCode = barCode;
+    }
 
-	public Genre getGenre() {
-		return genre;
-	}
+    public Genre getGenre() {
+        return genre;
+    }
 
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
 
-	public ArrayList<Game> getGames() {
-		return games;
-	}
+    public ArrayList<Game> getGames() {
+        return games;
+    }
 
-	public void setGames(ArrayList<Game> games) {
-		this.games = games;
-	}
+    public void setGames(ArrayList<Game> games) {
+        this.games = games;
+    }
 
-	public Game getGame() {
-		return game;
-	}
+    public Game getGame() {
+        return game;
+    }
 
-	public void setGame(Game game) {
-		this.game = game;
-	}
-        
-        public String[] addGame(String[] data){
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public String[] addGame(String[] data) {
         Factory factory = Factory.getInstance();
         Game newGame;
         newGame = factory.createGame(data);
-        if (search_book(newGame) == null) {
-            games.add(newGame);
+        if (searchGame(newGame) == null) {
             newGame.setGameTitle(this);
+            games.add(newGame);            
             return newGame.toStringMap();
         }
         return null;
-        }
-        
-    public Game search_book(Game book) {
+    }
+
+    public Game searchGame(Game game) {
         int idx;
-        if ((idx = games.indexOf(book)) != -1) {
+        if ((idx = games.indexOf(game)) != -1) {
             game = (Game) games.get(idx);
             return game;
         }
         return null;
-    }        
-        
-        @Override
-        public boolean equals(Object o){
-            if(o instanceof GameTitle){
-                if(this.studio.equals(((GameTitle) o).getStudio())){
-                    if(this.title.equals(((GameTitle) o).getTitle())){
-                        if(this.publisher.equals(((GameTitle) o).getPublisher()))
-                            if(this.barCode==((GameTitle) o).getBarCode())
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof GameTitle) {
+            if (this.studio.equals(((GameTitle) o).getStudio())) {
+                if (this.title.equals(((GameTitle) o).getTitle())) {
+                    if (this.publisher.equals(((GameTitle) o).getPublisher())) {
+                        if (this.barCode == ((GameTitle) o).getBarCode()) {
                             return true;
+                        }
                     }
                 }
-            }        
-            return false;
+            }
         }
+        return false;
+    }
 
     @Override
     public int hashCode() {
@@ -178,41 +182,42 @@ public class GameTitle {
         hash = 67 * hash + Objects.hashCode(this.genre);
         return hash;
     }
-        
-        public boolean getFreeGame(LocalDate date){
-           for(Game g : games){
-               if(g.isFree(date))
-               {
-                   game=g;
-                   return true;
-               }
-           } 
-           return false;
-        }
-        
-        public String[] toStringMap(){
-            String[] map = new String[6];
-            if(genre!=null){
-                map[0]="0";
-                map[5]=genre.toString();
-                map[4]=publisher;
-                map[3]=title;
-                map[2]=studio;
-                map[1]=Integer.toString(barCode);
-            }else if(publisher!=null&&studio!=null&&title!=null){
-                map[0]="1";
-                map[4]=publisher;
-                map[3]=title;
-                map[2]=studio;
-                map[1]=Integer.toString(barCode);
-            }else{
-                map[0]="0";
-                map[1]=Integer.toString(barCode);
+
+    public boolean getFreeGame(LocalDate date) {
+        for (Game g : games) {
+            if (g.isFree(date)) {
+                game = g;
+                return true;
             }
-            return map;
         }
-        
-      
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return title ;
+    }
+
+    public String[] toStringMap() {
+        String[] map = new String[6];
+        if (genre != null) {
+            map[0] = "0";
+            map[5] = genre.toString();
+            map[4] = publisher;
+            map[3] = title;
+            map[2] = studio;
+            map[1] = Integer.toString(barCode);
+        } else if (publisher != null && studio != null && title != null) {
+            map[0] = "1";
+            map[4] = publisher;
+            map[3] = title;
+            map[2] = studio;
+            map[1] = Integer.toString(barCode);
+        } else {
+            map[0] = "0";
+            map[1] = Integer.toString(barCode);
+        }
+        return map;
+    }
 
 }
-
